@@ -30,9 +30,9 @@ class TestNeedHelp(BaseClass):
         login_page = LoginPage(self.driver)
         login_page.click_need_help_link()
         login_page.set_need_help_email("invalid_email_address")
-        login_page.click_reset_button()
+        login_page.click_reset_invalid_email_button()
         is_message_displayed = login_page.is_invalid_email_message_displayed()
-        assert is_message_displayed is True
+        assert is_message_displayed is True, "Error message did not display"
 
     def test_reset_button_disabled(self):
         login_page = LoginPage(self.driver)
@@ -49,5 +49,5 @@ class TestNeedHelp(BaseClass):
         login_page.click_need_help_link()
         login_page.click_back_button()
         is_displayed = login_page.is_login_form_displayed()
-        assert is_displayed is True
+        assert is_displayed is True, "Login form is not displayed"
 

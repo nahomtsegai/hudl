@@ -1,3 +1,5 @@
+import time
+
 from selenium.webdriver.common.by import By
 
 from pages.HomePage import HomePage
@@ -21,6 +23,7 @@ class LoginPage(BaseClass):
     reset_invalid_message = (By.CSS_SELECTOR, "[data-qa-id='password-reset-error-display']")
     back_navigation_link = (By.CSS_SELECTOR, "a[class*='styles_backIconContainer']")
     signup_link = (By.CSS_SELECTOR, "a[href='/register/signup']")
+    login_help_container = (By.CSS_SELECTOR, "[class*='loginHelpContainer'] h3")
 
     def get_email(self):
         return self.find_element_by_css_selector(LoginPage.email_input).text
@@ -55,6 +58,8 @@ class LoginPage(BaseClass):
 
     def click_fail_login_button(self):
         self.find_element_by_css_selector(LoginPage.login_button).click()
+        self.text_to_be_present_in_element(LoginPage.error_message,
+                                           "We didn't recognize that email and/or password.Need help?")
 
     def is_error_message_displayed(self):
         return self.find_element_by_css_selector(LoginPage.error_message).is_displayed()
@@ -74,8 +79,10 @@ class LoginPage(BaseClass):
     def is_reset_button_enabled(self):
         return self.find_element_by_css_selector(LoginPage.reset_password_button).is_enabled()
 
-    def click_reset_button(self):
+    def click_reset_invalid_email_button(self):
         self.find_element_by_css_selector(LoginPage.reset_password_button).click()
+        self.text_to_be_present_in_element(LoginPage.reset_invalid_message, "That isn't a valid email address. Make "
+                                                                            "sure to use the email@domain.com format.")
 
     def is_invalid_email_message_displayed(self):
         return self.find_element_by_css_selector(LoginPage.reset_invalid_message).is_displayed()

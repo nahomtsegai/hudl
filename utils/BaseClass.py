@@ -27,6 +27,9 @@ class BaseClass:
         WebDriverWait(self.driver, 30).until(
             expected_conditions.presence_of_element_located((By.LINK_TEXT, text)), "Link not found")
 
+    def text_to_be_present_in_element(self, locator, text):
+        WebDriverWait(self.driver, 5).until(expected_conditions.text_to_be_present_in_element(locator, text), "Element not found")
+
     def get_logger(self):
         logger_name = inspect.stack()[1][3]
         logger = logging.getLogger(logger_name)
